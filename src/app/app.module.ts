@@ -1,5 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+
+import { ROUTES } from './app.route';
 
 import { AppComponent } from './app.component';
 import { AcessoComponent } from './acesso/acesso.component';
@@ -9,7 +13,11 @@ import { CadastroComponent } from './acesso/cadastro/cadastro.component';
 
 @NgModule({
     declarations: [AppComponent, AcessoComponent, BannerComponent, LoginComponent, CadastroComponent],
-    imports: [BrowserModule],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot(ROUTES)
+    ],
     providers: [],
     bootstrap: [AppComponent]
 })
