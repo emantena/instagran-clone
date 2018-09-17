@@ -57,6 +57,7 @@ import {
         ])
     ]
 })
+
 export class AcessoComponent implements OnInit {
     public estadoBanner = 'created';
     public estadoPainel = 'created';
