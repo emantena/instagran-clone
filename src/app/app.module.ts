@@ -16,6 +16,7 @@ import { CadastroComponent } from './acesso/cadastro/cadastro.component';
 import { Autenticacao } from './services/autenticacao.service';
 import { HomeComponent } from './home/home.component';
 import { PublicacoesComponent } from './home/publicacoes/publicacoes.component';
+import { AutenticacaoGuard } from './services/autenticacao-guard.service';
 // endregion
 
 @NgModule({
@@ -27,7 +28,8 @@ import { PublicacoesComponent } from './home/publicacoes/publicacoes.component';
         RouterModule.forRoot(ROUTES)
     ],
     providers: [
-        Autenticacao
+        Autenticacao,
+        AutenticacaoGuard
     ],
     bootstrap: [AppComponent]
 })
