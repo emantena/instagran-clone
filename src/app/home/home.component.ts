@@ -8,12 +8,13 @@ import { Autenticacao } from '../services/autenticacao.service';
 })
 export class HomeComponent implements OnInit {
     private _autenticacaoService: Autenticacao;
+    private email: string;
 
     constructor(autenticacaoService: Autenticacao) {
         this._autenticacaoService = autenticacaoService;
     }
 
-    ngOnInit() {}
+    ngOnInit() { }
 
     public logout(): void {
         this._autenticacaoService.logout();

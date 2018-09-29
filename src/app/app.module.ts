@@ -17,10 +17,21 @@ import { Autenticacao } from './services/autenticacao.service';
 import { HomeComponent } from './home/home.component';
 import { PublicacoesComponent } from './home/publicacoes/publicacoes.component';
 import { AutenticacaoGuard } from './services/autenticacao-guard.service';
+import { IncluirPublicacaoComponent } from './home/incluir-publicacao/incluir-publicacao.component';
+import { DataBaseService } from './services/dataBase.service';
+import { ProgressoService } from './services/progresso.service';
 // endregion
 
 @NgModule({
-    declarations: [AppComponent, AcessoComponent, BannerComponent, LoginComponent, CadastroComponent, HomeComponent, PublicacoesComponent],
+    declarations: [AppComponent,
+        AcessoComponent,
+        BannerComponent,
+        LoginComponent,
+        CadastroComponent,
+        HomeComponent,
+        PublicacoesComponent,
+        IncluirPublicacaoComponent
+    ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -29,7 +40,9 @@ import { AutenticacaoGuard } from './services/autenticacao-guard.service';
     ],
     providers: [
         Autenticacao,
-        AutenticacaoGuard
+        AutenticacaoGuard,
+        DataBaseService,
+        ProgressoService
     ],
     bootstrap: [AppComponent]
 })
