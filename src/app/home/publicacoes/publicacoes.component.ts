@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Autenticacao } from '../../services/autenticacao.service';
 import { DataBaseService } from '../../services/dataBase.service';
 import * as firebase from 'firebase';
+import { Publicacao } from '../../model/publicacao.model';
 
 @Component({
     selector: 'app-publicacoes',
@@ -10,6 +11,7 @@ import * as firebase from 'firebase';
 })
 export class PublicacoesComponent implements OnInit {
     private email: string;
+    public publicacoes: Publicacao[];
 
     constructor(private _autenticacaoService: Autenticacao,
         private _dataBaseService: DataBaseService
@@ -23,7 +25,10 @@ export class PublicacoesComponent implements OnInit {
 
     }
 
-    private obterPublicacoes(): any {
-        this._dataBaseService.obterPublicacoes(this.email);
+    public obterPublicacoes(): any {
+        this._dataBaseService.obterPublicacoes(this.email)
+            .then((publicacoes: Publicacao[]) => {
+                this.publicacoes = publicacoes;
+            });
     }
 }

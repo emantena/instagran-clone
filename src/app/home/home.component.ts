@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Autenticacao } from '../services/autenticacao.service';
+import { Publicacao } from '../model/publicacao.model';
 
 @Component({
     selector: 'app-home',
@@ -10,6 +11,9 @@ export class HomeComponent implements OnInit {
     private _autenticacaoService: Autenticacao;
     private email: string;
 
+    @ViewChild('publicacoes')
+    public publicacoes: Publicacao[];
+
     constructor(autenticacaoService: Autenticacao) {
         this._autenticacaoService = autenticacaoService;
     }
@@ -18,5 +22,10 @@ export class HomeComponent implements OnInit {
 
     public logout(): void {
         this._autenticacaoService.logout();
+    }
+
+    public atualizarTimeline(): void {
+        this.publicacoes.obterPublicacoes();
+        console.log('teste.....');
     }
 }

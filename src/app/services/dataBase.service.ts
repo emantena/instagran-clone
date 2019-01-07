@@ -4,6 +4,7 @@ import { Publicacao } from '../model/publicacao.model';
 import { Guid } from 'guid-typescript';
 import { Injectable } from '@angular/core';
 import { ProgressoService } from './progresso.service';
+import { resolve, reject } from 'q';
 
 @Injectable()
 export class DataBaseService {
@@ -37,8 +38,6 @@ export class DataBaseService {
 
                     publicacao.imagem = nomeArquivo.toString();
 
-                    console.log(this._progressoService.estado);
-
                     firebase.database()
                         .ref(`publicacoes/${btoa(email)}`)
                         .push(publicacao);
@@ -46,9 +45,12 @@ export class DataBaseService {
             );
     }
 
-    public obterPublicacoes(email: string): Publicacao[] {
+    public obterPublicacoes(email: string): Promise<Publicacao[]> {
+        return new Promise((resolve, reject) => {
+
         firebase.database()
             .ref(`publicacoes/${btoa(email)}`)
+            .orderByKey()
             .once('value')
             .then((snapshot: any) => {
                 // console.log(snapshot.val());
@@ -58,25 +60,33 @@ export class DataBaseService {
                     const publicacao: Publicacao = new Publicacao();
 
                     publicacao.titulo = childSnapshot.val().titulo;
+                    publicacao.imagem = childSnapshot.val().imagem;
+                    publicacao.key = childSnapshot.key;
 
+                    publicacoes.push(publicacao);
+                });
+
+                return publicacoes.reverse();
+            })
+            .then((publicacoes) => {
+                publicacoes.forEach((publicacao) => {
                     firebase.storage()
-                        .ref(`imagens/${childSnapshot.val().imagem}`)
+                        .ref(`imagens/${publicacao.imagem}`)
                         .getDownloadURL()
                         .then((url: string) => {
                             publicacao.imagem = url;
 
-                            publicacoes.push(publicacao);
-
                             firebase.database()
-                                .ref(`usuario_detalhe/${btoa(email)}`);
+                                .ref(`usuario_detalhe/${btoa(email)}`)
+                                    .once('value')
+                                    .then((usuario) => {
+                                        publicacao.autor = usuario.val().nome_completo;
+                                    });
                         });
                 });
 
-                return publicacoes;
-                // console.log(publicacoes);
+                resolve(publicacoes);
             });
-
-        const teste = new Array<Publicacao>();
-        return teste;
+        });
     }
 }

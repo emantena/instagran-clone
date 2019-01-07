@@ -11,7 +11,12 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         const config = {
-            // firebase config here
+            apiKey: 'AIzaSyC1z5qcDctk1jJqPNRUSz6A0VO1SQTZss8',
+            authDomain: 'instagran-clone-a775c.firebaseapp.com',
+            databaseURL: 'https://instagran-clone-a775c.firebaseio.com',
+            projectId: 'instagran-clone-a775c',
+            storageBucket: 'instagran-clone-a775c.appspot.com',
+            messagingSenderId: '355136377384'
         };
 
         firebase.initializeApp(config);

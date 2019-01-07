@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -20,6 +20,9 @@ export class IncluirPublicacaoComponent implements OnInit {
     private _progressoService: ProgressoService;
     private email: string;
     private publicacao = new Publicacao();
+
+    @Output()
+    public atualizarTimeLine: EventEmitter<any> = new EventEmitter<any>();
 
     public formulario = new FormGroup({
         'titulo': new FormControl(null)
@@ -59,6 +62,7 @@ export class IncluirPublicacaoComponent implements OnInit {
 
             if (this._progressoService.status === 'concluído') {
                 continua.next(false);
+                this.atualizarTimeLine.emit();
             }
 
             this.statusUpload = this._progressoService.status;
